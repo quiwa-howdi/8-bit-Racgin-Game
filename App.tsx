@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import Game from './components/Game';
 import UI from './components/UI';
 import CRTOverlay from './components/CRTOverlay';
-import BootScreen from './components/BootScreen';
+
 import { GameState, RaceStats } from './types';
 
 const App: React.FC = () => {
   // Start in BOOT state instead of MENU
-  const [gameState, setGameState] = useState<GameState>(GameState.BOOT);
+  // 直接進入 MENU 狀態
+const [gameState, setGameState] = useState<GameState>(GameState.MENU);
   const [lastStats, setLastStats] = useState<RaceStats | null>(null);
 
   const handleGameOver = async (stats: RaceStats) => {
@@ -35,10 +36,7 @@ const App: React.FC = () => {
           {/* Screen Container - Enforce 2:3 Aspect Ratio for scaling */}
           <div className="relative w-full aspect-[2/3] rounded-sm overflow-hidden border border-black shadow-[0_0_15px_rgba(0,0,0,0.8)] bg-black">
              
-             {/* Boot Screen Layer - Only shows during BOOT state */}
-             {gameState === GameState.BOOT && (
-               <BootScreen onComplete={handleBootComplete} />
-             )}
+
 
              {/* Game Layer - Always mounted but active based on state */}
              <div className={`w-full h-full ${gameState === GameState.BOOT ? 'opacity-0' : 'opacity-100'}`}>
