@@ -2,15 +2,20 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Retro Racer: Gemini Circuit</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
+    
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    
     <style>
       body {
         font-family: 'Press Start 2P', cursive;
         background-color: #1a1a1a;
         overflow: hidden;
+        margin: 0; /* 確保沒有預設邊距 */
       }
       /* Custom scrollbar for retro feel */
       ::-webkit-scrollbar {
@@ -23,18 +28,10 @@
         background: #ef4444; 
       }
     </style>
-  <script type="importmap">
-{
-  "imports": {
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
-    "react/": "https://aistudiocdn.com/react@^19.2.0/",
-    "react": "https://aistudiocdn.com/react@^19.2.0",
-    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0"
-  }
-}
-</script>
-</head>
+  </head>
   <body>
     <div id="root"></div>
+    
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
