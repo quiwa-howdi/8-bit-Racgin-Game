@@ -16,7 +16,7 @@ export interface Entity {
   y: number;
   width: number;
   height: number;
-  type: 'PLAYER' | 'ENEMY' | 'OBSTACLE';
+  type: 'PLAYER' | 'ENEMY' | 'OBSTACLE' | 'HEART';
   color: string;
   speed: number;
   lane?: number; // 0, 1, 2

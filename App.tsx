@@ -4,25 +4,15 @@ import UI from './components/UI';
 import CRTOverlay from './components/CRTOverlay';
 import BootScreen from './components/BootScreen';
 import { GameState, RaceStats } from './types';
-import { generateRaceCommentary } from './services/geminiService';
 
 const App: React.FC = () => {
   // Start in BOOT state instead of MENU
   const [gameState, setGameState] = useState<GameState>(GameState.BOOT);
   const [lastStats, setLastStats] = useState<RaceStats | null>(null);
-  const [commentary, setCommentary] = useState<string>("");
-  const [loadingCommentary, setLoadingCommentary] = useState<boolean>(false);
 
   const handleGameOver = async (stats: RaceStats) => {
     setLastStats(stats);
     setGameState(GameState.GAME_OVER);
-    
-    // Fetch AI Commentary
-    setLoadingCommentary(true);
-    setCommentary("");
-    const comment = await generateRaceCommentary(stats);
-    setCommentary(comment);
-    setLoadingCommentary(false);
   };
 
   const handleStart = () => {
@@ -34,16 +24,16 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#121212] flex items-center justify-center p-4 font-sans overflow-hidden">
+    <div className="min-h-screen bg-[#121212] flex items-center justify-center p-2 sm:p-4 font-sans overflow-hidden touch-none">
       
-      {/* Minimal Retro Shell */}
-      <div className="relative bg-[#d4d4d8] p-4 pb-6 rounded-2xl shadow-[0_0_0_2px_#27272a,0_20px_60px_rgba(0,0,0,0.9)] border-b-8 border-[#52525b]">
+      {/* Minimal Retro Shell - Responsive Container */}
+      <div className="relative w-full max-w-[440px] bg-[#d4d4d8] p-2 sm:p-4 pb-4 sm:pb-6 rounded-2xl shadow-[0_0_0_2px_#27272a,0_20px_60px_rgba(0,0,0,0.9)] border-b-4 sm:border-b-8 border-[#52525b]">
         
         {/* Bezel/Frame */}
-        <div className="bg-[#27272a] p-3 rounded-lg shadow-[inset_0_0_20px_rgba(0,0,0,0.8)]">
+        <div className="bg-[#27272a] p-2 sm:p-3 rounded-lg shadow-[inset_0_0_20px_rgba(0,0,0,0.8)]">
           
-          {/* Screen Container */}
-          <div className="relative rounded-sm overflow-hidden border border-black shadow-[0_0_15px_rgba(0,0,0,0.8)] bg-black">
+          {/* Screen Container - Enforce 2:3 Aspect Ratio for scaling */}
+          <div className="relative w-full aspect-[2/3] rounded-sm overflow-hidden border border-black shadow-[0_0_15px_rgba(0,0,0,0.8)] bg-black">
              
              {/* Boot Screen Layer - Only shows during BOOT state */}
              {gameState === GameState.BOOT && (
@@ -51,7 +41,7 @@ const App: React.FC = () => {
              )}
 
              {/* Game Layer - Always mounted but active based on state */}
-             <div className={gameState === GameState.BOOT ? 'opacity-0' : 'opacity-100'}>
+             <div className={`w-full h-full ${gameState === GameState.BOOT ? 'opacity-0' : 'opacity-100'}`}>
                <Game 
                  gameState={gameState} 
                  setGameState={setGameState}
@@ -64,8 +54,6 @@ const App: React.FC = () => {
                  onStart={handleStart}
                  onRestart={handleStart}
                  lastStats={lastStats}
-                 commentary={commentary}
-                 loadingCommentary={loadingCommentary}
                />
              </div>
 
@@ -76,7 +64,7 @@ const App: React.FC = () => {
         </div>
 
         {/* Decorative Elements below screen */}
-        <div className="mt-3 flex justify-between items-center px-4">
+        <div className="mt-3 flex justify-between items-center px-2 sm:px-4">
             <div className="flex items-center gap-2">
                 {/* Speaker Grills */}
                 <div className="flex gap-1">
@@ -86,7 +74,7 @@ const App: React.FC = () => {
                 </div>
             </div>
 
-            <div className="text-[#52525b] font-bold text-xs tracking-[0.3em] font-serif italic">
+            <div className="text-[#52525b] font-bold text-[10px] sm:text-xs tracking-[0.3em] font-serif italic">
                 GEMINI<span className="text-red-500">RACING</span>
             </div>
 
